@@ -33,7 +33,7 @@ resource "random_password" "admin_password" {
 
 module "redshift_cluster" {
   source  = "cloudposse/redshift-cluster/aws"
-  version = "1.0.0"
+  version = "1.3.1"
 
   subnet_ids             = local.subnet_ids
   vpc_security_group_ids = coalesce(var.security_group_ids, module.redshift_sg[*].id, [])
