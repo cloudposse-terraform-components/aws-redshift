@@ -7,9 +7,8 @@ tags:
 
 # Component: `redshift`
 
-This component is responsible for provisioning a RedShift instance. It seeds relevant database information (hostnames,
-username, password, etc.) into AWS SSM Parameter Store.
-
+This component provisions an AWS Redshift cluster and seeds relevant database
+information (hostnames, username, password, etc.) into AWS SSM Parameter Store.
 ## Usage
 
 **Stack Level**: Regional
@@ -45,9 +44,11 @@ components:
             cidr_blocks:
               - 10.0.0.0/8
 ```
-
 <!-- prettier-ignore-start -->
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- prettier-ignore-end -->
+
+
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -146,12 +147,17 @@ components:
 | <a name="output_port"></a> [port](#output\_port) | The Port the cluster responds on |
 | <a name="output_redshift_database_ssm_key_prefix"></a> [redshift\_database\_ssm\_key\_prefix](#output\_redshift\_database\_ssm\_key\_prefix) | SSM prefix |
 | <a name="output_vpc_security_group_ids"></a> [vpc\_security\_group\_ids](#output\_vpc\_security\_group\_ids) | The VPC security group IDs associated with the cluster |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-<!-- prettier-ignore-end -->
+<!-- markdownlint-restore -->
+
+
 
 ## References
 
-- [cloudposse/terraform-aws-components](https://github.com/cloudposse/terraform-aws-components/tree/main/modules/redshift) -
-  Cloud Posse's upstream component
+
+- [cloudposse-terraform-components](https://github.com/orgs/cloudposse-terraform-components/repositories) - Cloud Posse's upstream component
+
+
+
 
 [<img src="https://cloudposse.com/logo-300x69.svg" height="32" align="right"/>](https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse-terraform-components/aws-redshift&utm_content=)
+
