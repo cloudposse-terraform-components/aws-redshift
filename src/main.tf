@@ -1,8 +1,8 @@
 locals {
   enabled        = module.this.enabled
   subnet_ids     = var.use_private_subnets ? module.vpc.outputs.private_subnet_ids : module.vpc.outputs.public_subnet_ids
-  admin_user     = var.admin_user != null && var.admin_user != "" ? var.admin_user : join("", random_pet.admin_user.*.id)
-  admin_password = var.admin_password != null && var.admin_password != "" ? var.admin_password : join("", random_password.admin_password.*.result)
+  admin_user     = var.admin_user != null && var.admin_user != "" ? var.admin_user : join("", random_pet.admin_user[*].id)
+  admin_password = var.admin_password != null && var.admin_password != "" ? var.admin_password : join("", random_password.admin_password[*].result)
   database_name  = var.database_name == null ? module.this.id : var.database_name
 }
 
