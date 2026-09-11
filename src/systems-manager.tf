@@ -14,7 +14,7 @@ variable "ssm_enabled" {
 variable "ssm_key_format" {
   type        = string
   default     = "/%v/%v/%v"
-  description = "SSM path format. The values will will be used in the following order: `var.ssm_key_prefix`, `var.name`, `var.ssm_key_*`"
+  description = "SSM path format. The values will be used in the following order: `var.ssm_key_prefix`, `var.name`, `var.ssm_key_*`"
 }
 
 variable "ssm_key_prefix" {
@@ -27,6 +27,12 @@ variable "ssm_key_user" {
   type        = string
   default     = "admin/db_user"
   description = "The SSM key to save the user. See `var.ssm_path_format`."
+}
+
+variable "ssm_key_database_name" {
+  type        = string
+  default     = "admin/db_name"
+  description = "The SSM key to save the database name. See `var.ssm_path_format`."
 }
 
 variable "ssm_key_password" {
@@ -54,9 +60,9 @@ locals {
 resource "aws_ssm_parameter" "redshift_database_name" {
   count = local.ssm_enabled ? 1 : 0
 
-  name        = format(var.ssm_key_format, var.ssm_key_prefix, var.name, var.ssm_key_port)
+  name        = format(var.ssm_key_format, var.ssm_key_prefix, var.name, var.ssm_key_database_name)
   value       = local.database_name
-  description = "Redshift DB port"
+  description = "Redshift DB name"
   type        = "String"
   overwrite   = true
 }
