@@ -100,3 +100,108 @@ variable "custom_sg_rules" {
   default     = []
   description = "An array of custom security groups to create and assign to the cluster."
 }
+
+variable "cluster_identifier" {
+  type        = string
+  default     = ""
+  description = "The Redshift Cluster Identifier. Must be a lower case string. Will use generated label ID if not supplied"
+}
+
+variable "snapshot_identifier" {
+  type        = string
+  default     = null
+  description = "The name of the snapshot from which to create the new cluster"
+}
+
+variable "snapshot_cluster_identifier" {
+  type        = string
+  default     = null
+  description = "The name of the cluster the source snapshot was created from"
+}
+
+variable "encrypted" {
+  type        = bool
+  default     = false
+  description = "Specifies whether the cluster is encrypted at rest"
+}
+
+variable "kms_key_arn" {
+  type        = string
+  default     = null
+  description = "The ARN for the KMS encryption key. When specifying `kms_key_arn`, `encrypted` needs to be set to `true`"
+}
+
+variable "iam_roles" {
+  type        = list(string)
+  default     = []
+  description = "A list of IAM Role ARNs to associate with the cluster. A maximum of 10 can be associated to the cluster at any time"
+}
+
+variable "logging_enabled" {
+  type        = bool
+  default     = false
+  description = "If true, enables logging information such as queries and connection attempts, for the specified Amazon Redshift cluster"
+}
+
+variable "logging_bucket_name" {
+  type        = string
+  default     = null
+  description = "The name of an existing S3 bucket where the log files are to be stored. Must be in the same region as the cluster and the cluster must have read bucket and put object permissions"
+}
+
+variable "logging_s3_key_prefix" {
+  type        = string
+  default     = null
+  description = "The prefix applied to the log file names"
+}
+
+variable "preferred_maintenance_window" {
+  type        = string
+  default     = null
+  description = "Weekly time range during which system maintenance can occur, in UTC. Format: ddd:hh24:mi-ddd:hh24:mi"
+}
+
+variable "automated_snapshot_retention_period" {
+  type        = number
+  default     = 1
+  description = "The number of days that automated snapshots are retained. If the value is 0, automated snapshots are disabled"
+}
+
+variable "availability_zone" {
+  type        = string
+  default     = null
+  description = "Optional parameter to place Amazon Redshift cluster instances in a specific availability zone. If left empty, will place randomly"
+}
+
+variable "availability_zone_relocation_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether or not the cluster can be relocated to another availability zone, either automatically by AWS or when requested. Available for use on clusters from the RA3 instance family"
+}
+
+variable "enhanced_vpc_routing" {
+  type        = bool
+  default     = false
+  description = "If true, enhanced VPC routing is enabled"
+}
+
+variable "skip_final_snapshot" {
+  type        = bool
+  default     = true
+  description = "Determines whether a final snapshot of the cluster is created before Amazon Redshift deletes the cluster"
+}
+
+variable "final_snapshot_identifier" {
+  type        = string
+  default     = null
+  description = "The identifier of the final snapshot that is to be created immediately before deleting the cluster. If this parameter is provided, `skip_final_snapshot` must be `false`"
+}
+
+variable "cluster_parameters" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  default     = []
+  description = "List of Redshift parameters to apply"
+}
