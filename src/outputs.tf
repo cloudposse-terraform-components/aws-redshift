@@ -28,9 +28,14 @@ output "vpc_security_group_ids" {
   value       = local.enabled ? module.redshift_cluster.vpc_security_group_ids : null
 }
 
-output "cluster_security_groups" {
-  description = "The security groups associated with the cluster"
-  value       = local.enabled ? module.redshift_cluster.cluster_security_groups : null
+output "cluster_revision_number" {
+  description = "The Redshift engine revision number the cluster is running"
+  value       = local.enabled ? module.redshift_cluster.cluster_revision_number : null
+}
+
+output "cluster_parameter_group_name" {
+  description = "The name of the parameter group associated with the cluster"
+  value       = local.enabled ? module.redshift_cluster.cluster_parameter_group_name : null
 }
 
 output "endpoint" {
