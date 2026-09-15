@@ -49,6 +49,32 @@ module "redshift_cluster" {
   publicly_accessible   = var.publicly_accessible
   allow_version_upgrade = var.allow_version_upgrade
 
+  cluster_identifier          = var.cluster_identifier
+  snapshot_identifier         = var.snapshot_identifier
+  snapshot_cluster_identifier = var.snapshot_cluster_identifier
+
+  encrypted   = var.encrypted
+  kms_key_arn = var.kms_key_arn
+
+  iam_roles = var.iam_roles
+
+  logging_enabled       = var.logging_enabled
+  logging_bucket_name   = var.logging_bucket_name
+  logging_s3_key_prefix = var.logging_s3_key_prefix
+
+  preferred_maintenance_window        = var.preferred_maintenance_window
+  automated_snapshot_retention_period = var.automated_snapshot_retention_period
+
+  availability_zone                    = var.availability_zone
+  availability_zone_relocation_enabled = var.availability_zone_relocation_enabled
+
+  enhanced_vpc_routing = var.enhanced_vpc_routing
+
+  skip_final_snapshot       = var.skip_final_snapshot
+  final_snapshot_identifier = var.final_snapshot_identifier
+
+  cluster_parameters = var.cluster_parameters
+
   context = module.this.context
 }
 
