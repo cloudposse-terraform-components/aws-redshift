@@ -205,3 +205,22 @@ variable "cluster_parameters" {
   default     = []
   description = "List of Redshift parameters to apply"
 }
+
+variable "vpc_component_name" {
+  type        = string
+  default     = "vpc"
+  nullable    = false
+  description = "VPC component name"
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  default     = null
+  description = "Subnet IDs to place the cluster in. When set, these are used directly and the `vpc` component is not looked up, which allows the component to be used in stacks that have no CloudPosse managed VPC"
+}
+
+variable "vpc_id" {
+  type        = string
+  default     = null
+  description = "VPC the cluster's security group belongs to. Only needed alongside `subnet_ids`, which bypasses the `vpc` component lookup, and only when `custom_sg_enabled` is `true`. Left null, the ID comes from the `vpc` component as before"
+}
