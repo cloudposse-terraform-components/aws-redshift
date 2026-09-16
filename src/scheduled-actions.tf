@@ -30,6 +30,13 @@ resource "aws_redshift_scheduled_action" "resume" {
       cluster_identifier = module.redshift_cluster.cluster_identifier
     }
   }
+
+  lifecycle {
+    precondition {
+      condition     = var.scheduled_action_iam_role_arn != null && var.scheduled_action_iam_role_arn != ""
+      error_message = "`scheduled_action_iam_role_arn` is required when `pause_resume_enabled` is true and `pause_resume_schedules` is non-empty. The provider requires `iam_role` on `aws_redshift_scheduled_action`. The role must trust `scheduler.redshift.amazonaws.com` and allow `redshift:PauseCluster` and `redshift:ResumeCluster`."
+    }
+  }
 }
 
 resource "aws_redshift_scheduled_action" "pause" {
@@ -43,6 +50,13 @@ resource "aws_redshift_scheduled_action" "pause" {
   target_action {
     pause_cluster {
       cluster_identifier = module.redshift_cluster.cluster_identifier
+    }
+  }
+
+  lifecycle {
+    precondition {
+      condition     = var.scheduled_action_iam_role_arn != null && var.scheduled_action_iam_role_arn != ""
+      error_message = "`scheduled_action_iam_role_arn` is required when `pause_resume_enabled` is true and `pause_resume_schedules` is non-empty. The provider requires `iam_role` on `aws_redshift_scheduled_action`. The role must trust `scheduler.redshift.amazonaws.com` and allow `redshift:PauseCluster` and `redshift:ResumeCluster`."
     }
   }
 }
