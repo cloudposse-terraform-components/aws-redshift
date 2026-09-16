@@ -224,3 +224,30 @@ variable "vpc_id" {
   default     = null
   description = "VPC the cluster's security group belongs to. Only needed alongside `subnet_ids`, which bypasses the `vpc` component lookup, and only when `custom_sg_enabled` is `true`. Left null, the ID comes from the `vpc` component as before"
 }
+
+variable "pause_resume_enabled" {
+  type        = bool
+  default     = false
+  description = "Whether to create scheduled actions that pause and resume the cluster"
+}
+
+variable "pause_resume_schedules" {
+  type = map(object({
+    resume_cron = string
+    pause_cron  = string
+  }))
+  default     = {}
+  description = <<-EOT
+    Named up-windows for the cluster, each a resume and pause cron pair. A map rather than a
+    single pair because `preferred_maintenance_window` must fall inside an up-window, since AWS
+    cannot maintain a paused cluster. That usually means one window for the workload and a
+    separate one for maintenance. Cron is UTC, in the Redshift format
+    `cron(Minutes Hours Day-of-month Month Day-of-week Year)`.
+  EOT
+}
+
+variable "scheduled_action_iam_role_arn" {
+  type        = string
+  default     = null
+  description = "ARN of the IAM role Redshift assumes to run the scheduled actions. Must trust `scheduler.redshift.amazonaws.com` and allow `redshift:PauseCluster` and `redshift:ResumeCluster`"
+}
