@@ -96,7 +96,7 @@ module "redshift_sg" {
 
   rules = var.custom_sg_rules
 
-  vpc_id = module.vpc.outputs.vpc_id
+  vpc_id = var.vpc_id != null ? var.vpc_id : module.vpc.outputs.vpc_id
 
   context = module.this.context
 }

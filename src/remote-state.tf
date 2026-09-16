@@ -11,6 +11,7 @@ module "vpc" {
   defaults = {
     private_subnet_ids = []
     public_subnet_ids  = []
+    vpc_id             = null
   }
 
   context = module.this.context
