@@ -251,3 +251,43 @@ variable "scheduled_action_iam_role_arn" {
   default     = null
   description = "ARN of the IAM role Redshift assumes to run the scheduled actions. Must trust `scheduler.redshift.amazonaws.com` and allow `redshift:PauseCluster` and `redshift:ResumeCluster`"
 }
+
+variable "cluster_parameter_group_family" {
+  type        = string
+  default     = "redshift-1.0"
+  description = "Family of the cluster parameter group. RA3 and RG node types require `redshift-2.0`; DC2 and older use `redshift-1.0`"
+}
+
+variable "manual_snapshot_retention_period" {
+  type        = number
+  default     = -1
+  description = "The default number of days to retain a manual snapshot. If the value is -1, the snapshot is retained indefinitely. Valid values are -1 and integers between 1 and 3653"
+}
+
+variable "maintenance_track_name" {
+  type        = string
+  default     = "current"
+  description = "The name of the maintenance track for the cluster. Valid values are `current` and `trailing`"
+
+  validation {
+    condition     = contains(["current", "trailing"], var.maintenance_track_name)
+    error_message = "The maintenance_track_name value must be either `current` or `trailing`."
+  }
+}
+
+variable "logging_destination_type" {
+  type        = string
+  default     = "s3"
+  description = "Log destination type. Valid values are `s3` and `cloudwatch`."
+
+  validation {
+    condition     = contains(["s3", "cloudwatch"], var.logging_destination_type)
+    error_message = "Invalid logging destination type. Valid values are `s3` and `cloudwatch`."
+  }
+}
+
+variable "logging_exports" {
+  type        = list(string)
+  default     = []
+  description = "A list of log types to be enabled. Valid values are `userlog`, `connectionlog`, and `useractivitylog`."
+}

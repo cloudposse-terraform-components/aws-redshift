@@ -60,12 +60,16 @@ module "redshift_cluster" {
 
   iam_roles = var.iam_roles
 
-  logging_enabled       = var.logging_enabled
-  logging_bucket_name   = var.logging_bucket_name
-  logging_s3_key_prefix = var.logging_s3_key_prefix
+  logging_enabled          = var.logging_enabled
+  logging_destination_type = var.logging_destination_type
+  logging_exports          = var.logging_exports
+  logging_bucket_name      = var.logging_bucket_name
+  logging_s3_key_prefix    = var.logging_s3_key_prefix
 
+  maintenance_track_name              = var.maintenance_track_name
   preferred_maintenance_window        = var.preferred_maintenance_window
   automated_snapshot_retention_period = var.automated_snapshot_retention_period
+  manual_snapshot_retention_period    = var.manual_snapshot_retention_period
 
   availability_zone                    = var.availability_zone
   availability_zone_relocation_enabled = var.availability_zone_relocation_enabled
@@ -75,7 +79,8 @@ module "redshift_cluster" {
   skip_final_snapshot       = var.skip_final_snapshot
   final_snapshot_identifier = var.final_snapshot_identifier
 
-  cluster_parameters = var.cluster_parameters
+  cluster_parameters             = var.cluster_parameters
+  cluster_parameter_group_family = var.cluster_parameter_group_family
 
   context = module.this.context
 }
